@@ -14,10 +14,15 @@ app.get ("/" ,(req,res) =>{
   res.send("Hello");
 
 });
-
-app.get("/urls.json", (req,res) =>{
-  res.json(urlDatabase);
+//Filling Out the urls_index.ejs Template
+app.get("/urls",(req,res) =>{
+  const templateVars = {urls : urlDatabase};
+  res.render("urls_index" ,templateVars);
 });
+
+// app.get("/urls.json", (req,res) =>{
+//   res.json(urlDatabase);
+// });
 
 app.get("/hello", (req,res) =>{
   res.send("<html><body><h1>Hello</h1><b>World</b></body>\n");
