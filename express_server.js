@@ -14,12 +14,18 @@ app.get ("/" ,(req,res) =>{
   res.send("Hello");
 
 });
-//Filling Out the urls_index.ejs Template
+//filling Out the urls_index.ejs Template
 app.get("/urls",(req,res) =>{
   const templateVars = {urls : urlDatabase};
   res.render("urls_index" ,templateVars);
 });
 
+//added shortURL using : and stored it into req.params
+app.get("/urls/:shortURL", (req,res)=>{
+  console.log(req.params);
+  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]  };
+  res.render ("urls_show", templateVars);
+});
 // app.get("/urls.json", (req,res) =>{
 //   res.json(urlDatabase);
 // });
