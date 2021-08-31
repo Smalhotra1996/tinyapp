@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const port = 8080; //default port 8080
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({extended: true}));
+
 
 
 const urlDatabase ={
@@ -18,6 +21,16 @@ app.get ("/" ,(req,res) =>{
 app.get("/urls",(req,res) =>{
   const templateVars = {urls : urlDatabase};
   res.render("urls_index" ,templateVars);
+});
+
+app.get("/urls/new", (req, res) => {
+  res.render("urls_new");
+});
+
+app.post("/urls",(req,res)=>{
+  console.log(req.body);
+  res.send("ok");
+
 });
 
 //added shortURL using : and stored it into req.params
@@ -48,3 +61,7 @@ app.listen(port , () => {
   console.log(`Example app listening on port ${port}!`);
 
 });
+
+function generateRandomString() {
+  return Math.random().toString(36).substr(2,6);
+}
