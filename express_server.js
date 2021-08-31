@@ -28,16 +28,29 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.post("/urls",(req,res)=>{
+  var shortURL = generateRandomString();
+  urlDatabase[shortURL] = req.params.longURL;
   console.log(req.body);
-  res.send("ok");
+  res.redirect(`/urls/${shortURL}`);
 
 });
 
 //added shortURL using : and stored it into req.params
 app.get("/urls/:shortURL", (req,res)=>{
-  console.log(req.params);
-  const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]  };
+  if (urlDatabase[req.params.shortURL]){
+    const templateVars = { shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL]  };
   res.render ("urls_show", templateVars);
+  }
+  else{
+    res.send("Url does not exist")
+  }
+ // console.log(req.params);
+  
+});
+
+app.get("/u/:shortURL" , (req,res) =>{
+  res.redirect(urlDatabase[req.params.shortURL]);
+
 });
 // app.get("/urls.json", (req,res) =>{
 //   res.json(urlDatabase);
