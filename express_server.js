@@ -1,8 +1,12 @@
 const express = require("express");
+var cookieParser = require('cookie-parser')
 const app = express();
+
 const port = 8080; //default port 8080
 const bodyParser = require("body-parser");
+
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser())
 //Set ejs as the view engine
 app.set("view engine" , "ejs");
 
@@ -25,7 +29,8 @@ app.get ("/" ,(req,res) =>{
 });
 //filling Out the urls_index.ejs Template
 app.get("/urls",(req,res) =>{
-  const templateVars = {urls : urlDatabase};
+  const username= req.cookies["username"];
+  const templateVars = {urls : urlDatabase, username};
   res.render("urls_index" ,templateVars);
 });
 
@@ -40,6 +45,22 @@ app.post("/urls",(req,res)=>{
   res.redirect(`/urls/${shortURL}`);
 
 });
+
+app.post("/login",(req,res)=>{
+  console.log(req.cookies);
+  res.cookie("username", req.body.username);
+  console.log(req.cookies);
+  console.log(req.body);
+  res.redirect("/urls");
+});
+
+app.post("/logout" ,(req,res)=>{
+  res.clearCookie('username');
+  res.redirect("/urls");
+
+});
+
+
 
 //added shortURL using : and stored it into req.params
 app.get("/urls/:shortURL", (req,res)=>{
