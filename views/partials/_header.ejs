@@ -12,16 +12,17 @@
         
       </div>
     </div>
-    
-      <% if (username){ %>
+   
+      <% if (user){ %>
+        
 
-        <%= username %> 
+        <%= user.email %> 
       <td><form method = "POST" action = "/logout"><button type = "submit"> Logout</button></form></td>
      
       <%  } else { %>
          please login in
-         <td><form method="POST" action="/login">
-         <input type="text" name="username" placeholder = "username" >
+        <td><form method="GET" action="/login">
+         
          <button type = "submit">Login</button></form></td>
       <% } %>
       
