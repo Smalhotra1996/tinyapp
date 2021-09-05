@@ -199,7 +199,7 @@ app.post("/urls/:id",(req,res) => {
     if(urlsList[req.params.id]){
       //console.log(urlDatabase[req.params.id]);
       urlDatabase[req.params.id].longURL = req.body.longURL;
-      res.redirect("/urls/" + req.params.id)
+      res.redirect("/urls")
     } else {
       const templateVars = { message: "Not authorized to access this URL!", user : null};
       
